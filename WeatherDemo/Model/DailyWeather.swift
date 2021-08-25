@@ -1,0 +1,47 @@
+//
+//  DailyWeather.swift
+//  WeatherDemo
+//
+//  Created by Viet Le on 25/08/2021.
+//
+
+import Foundation
+import UIKit
+
+class DailyWeather {
+    var time: Date!
+    var minTemp: CGFloat!
+    var maxTemp: CGFloat!
+    var changeRain: CGFloat!
+    var sunrise: Date!
+    var sunset: Date!
+    
+    var day: Int {
+        return time.day
+    }
+    
+    var weekDay: Int {
+        return time.weekday
+    }
+    
+    var weekDayString: String {
+        switch weekDay {
+        case 1:
+            return "Sunday"
+        case 2:
+            return "Monday"
+        case 3:
+            return "Tuesday"
+        case 4:
+            return "Wednesday"
+        case 5:
+            return "Thursday"
+        case 6:
+            return "Friday"
+        case 7:
+            return "Saturday"
+        default:
+            return "Unknown"
+        }
+    }
+}
