@@ -1,0 +1,9 @@
+WeatherDemo.xcworkspace/xcuserdata/
+Pods/
+*.DS_Store
+WeatherDemo.xcodeproj/xcuserdata/
+build/
+fastlane/report.xml
+*.zip
+*.ipa
+*.dSYM
