@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3538C31D26D91764003E85AA /* Timeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3538C31C26D91763003E85AA /* Timeline.swift */; };
 		3562195926D664440065C83B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3562195826D664440065C83B /* AppDelegate.swift */; };
 		3562195B26D664440065C83B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3562195A26D664440065C83B /* SceneDelegate.swift */; };
 		3562195D26D664440065C83B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3562195C26D664440065C83B /* ViewController.swift */; };
@@ -88,6 +89,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3538C31C26D91763003E85AA /* Timeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timeline.swift; sourceTree = "<group>"; };
 		3562195526D664440065C83B /* WeatherDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3562195826D664440065C83B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3562195A26D664440065C83B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -368,6 +370,7 @@
 				356219E826D67F9E0065C83B /* CurrentWeather.swift */,
 				356219EA26D684570065C83B /* Sunrise.swift */,
 				356219EC26D6847C0065C83B /* Sunset.swift */,
+				3538C31C26D91763003E85AA /* Timeline.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -674,6 +677,7 @@
 				356219BD26D665270065C83B /* AVAudioPlayerNodeExtensions.swift in Sources */,
 				356219C426D665270065C83B /* ColorExtensions.swift in Sources */,
 				356219BB26D665270065C83B /* FontExtensions.swift in Sources */,
+				3538C31D26D91764003E85AA /* Timeline.swift in Sources */,
 				356219D326D665270065C83B /* DimableView.swift in Sources */,
 				356219E926D67F9E0065C83B /* CurrentWeather.swift in Sources */,
 				356219B826D665270065C83B /* AVAudioFileExtensions.swift in Sources */,

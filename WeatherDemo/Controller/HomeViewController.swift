@@ -15,14 +15,14 @@ class HomeViewController: UIViewController {
     
     //MARK: - Variables
     var weather: Weather!
-    var dailyWeathers: [DailyWeather]!
-    var timelineWeathers = [AnyObject]()
+    var dailyWeathers = [DailyWeather]()
+    var timelineWeathers = [Timeline]()
     
     //MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        config()
         fetchData()
     }
     
@@ -64,7 +64,29 @@ class HomeViewController: UIViewController {
     func processTimelineWeathers() {
         timelineWeathers.append(self.weather.currentWeather!)
         timelineWeathers.append(contentsOf: self.weather.hourlyWeathers)
-        // Thêm các Object Sunrise và Sunset xuất hiện trong 24 tiếp theo
+        // current < .... < max TImeline
+        
+        if weather.todayWeather.sunrise!.time > weather.currentWeather.time && weather.todayWeather.sunrise.time < weather.hourlyWeathers.last!.time  {
+            timelineWeathers.append(weather.todayWeather.sunrise)
+        }
+        
+        if weather.todayWeather.sunset!.time > weather.currentWeather.time && weather.todayWeather.sunset.time < weather.hourlyWeathers.last!.time  {
+            timelineWeathers.append(weather.todayWeather.sunrise)
+        }
+        
+        let tomorowWeather = self.weather.dailyWeathers.first!
+        
+        if tomorowWeather.sunrise!.time > weather.currentWeather.time && tomorowWeather.sunrise.time < weather.hourlyWeathers.last!.time  {
+            timelineWeathers.append(tomorowWeather.sunrise)
+        }
+        
+        if tomorowWeather.sunset!.time > weather.currentWeather.time && tomorowWeather.sunset.time < weather.hourlyWeathers.last!.time  {
+            timelineWeathers.append(tomorowWeather.sunset)
+        }
+        
+        timelineWeathers.sort { timeline1, timeline2 in
+            return timeline1.getTime() < timeline2.getTime()
+        }
     }
     
     func updateUI() {
@@ -99,13 +121,30 @@ extension HomeViewController: UICollectionViewDataSource {
 
 //MARK: - UICollectionViewDelegateFlowLayout
 extension HomeViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if collectionView == timelineCollectionView {
+            return CGSize(width: 65, height: 120)
+        } else {
+            return CGSize(width: UIScreen.main.bounds.width, height: 30)
+        }
+    }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
 }
 
 // 1. Implement hoàn thiện giao diện file Xib
 // 2. Implement phần UICollectionViewDelegateFlowLayout (Kích thước Cell)
-// 3. Set Hướng cho từng collectionView trên file Xib (dọc/ ngang)
+
 // 4. Implement hàm bind(data:__) trong Cell. ( thêm icon/ set text...v..v)
 
 
 // 5. Thêm Sunrise và Sunset vào timeline
+
+
+// 3. Set Hướng cho từng collectionView trên file Xib (dọc/ ngang)

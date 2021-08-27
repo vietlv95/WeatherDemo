@@ -13,8 +13,8 @@ class DailyWeather {
     var minTemp: CGFloat!
     var maxTemp: CGFloat!
     var changeRain: CGFloat!
-    var sunrise: Date!
-    var sunset: Date!
+    var sunrise: Sunrise!
+    var sunset: Sunset!
     
     var day: Int {
         return time.day

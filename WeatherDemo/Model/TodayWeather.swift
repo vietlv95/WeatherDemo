@@ -9,12 +9,8 @@ import Foundation
 import UIKit
 
 class TodayWeather {
-    var sunrise: Date!
-    var sunset: Date!
+    var sunrise: Sunrise!
+    var sunset: Sunset!
     var changeRain: CGFloat!
     var humidity: Int!
-    
-    var weekDay: Int {
-        return sunset.weekday
-    }
 }

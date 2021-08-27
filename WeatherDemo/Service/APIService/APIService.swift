@@ -21,8 +21,12 @@ class APIService {
             let decoder = JSONDecoder()
             
             do {
+                //decode
                 let weatherResponse = try decoder.decode(WeatherResponse.self, from: data)
+                
+                //convert structs -> My Model
                 let weather = self.mapWeatherResponseToWeather(weatherResponse: weatherResponse)
+                
                 completion?(weather)
             } catch let error {
                 print(error)
@@ -35,6 +39,9 @@ extension APIService {
     
     func mapWeatherResponseToWeather(weatherResponse: WeatherResponse) -> Weather {
         let weather = Weather()
+        
+        //Convert từng thành phần
+        weather.currentWeather = mapCurrentWeatherResponseToCurrentCurrentWeather(currentResponse: weatherResponse.current)
         weather.hourlyWeathers = mapHourlyWeatherResponseToHourlyWeather(hourlyResponses: weatherResponse.hourly)
         
         weather.dailyWeathers = mapDailyWeatherResponseToDailyWeather(dailyResponses: weatherResponse.daily)
@@ -42,23 +49,24 @@ extension APIService {
         return weather
     }
     
-    func mapCurrentWeatherResponseToCurrentCurrentWeather(currentResponse: CurrentWeatherResponse) {
+    func mapCurrentWeatherResponseToCurrentCurrentWeather(currentResponse: CurrentWeatherResponse) -> CurrentWeather {
         let currentWeather = CurrentWeather()
         currentWeather.time = Date.init(timeIntervalSince1970: TimeInterval(currentResponse.dt))
         currentWeather.temp = currentResponse.temp
         currentWeather.isDayTime = (currentResponse.dt > currentResponse.sunrise && currentResponse.dt < currentResponse.sunset)
-        
+        return currentWeather
     }
     
     func mapHourlyWeatherResponseToHourlyWeather(hourlyResponses: [HourlyWeatherResponse]) -> [HourlyWeather] {
         
         var hourlyWeathers = [HourlyWeather]()
-        for i in 0..<24 {
+        for i in 1..<25 {
             let hourlyWeatherResponse = hourlyResponses[i]
             let hourlyWeather = HourlyWeather()
             hourlyWeather.time = Date.init(timeIntervalSince1970: TimeInterval(hourlyWeatherResponse.dt))
             hourlyWeather.changeRain = hourlyWeatherResponse.clouds
             hourlyWeather.temp = hourlyWeatherResponse.temp
+            hourlyWeathers.append(hourlyWeather)
         }
         
         return hourlyWeathers
@@ -75,8 +83,13 @@ extension APIService {
             dailyWeather.minTemp = dailyWeatherResponse.temp.min
             dailyWeather.maxTemp = dailyWeatherResponse.temp.max
             dailyWeather.changeRain = dailyWeatherResponse.clouds
-            dailyWeather.sunrise = Date.init(timeIntervalSince1970: TimeInterval(dailyWeatherResponse.sunrise))
-            dailyWeather.sunset = Date.init(timeIntervalSince1970: TimeInterval(dailyWeatherResponse.sunset))
+            
+            let sunriseTime = Date.init(timeIntervalSince1970: TimeInterval(dailyWeatherResponse.sunrise))
+            dailyWeather.sunrise = Sunrise(time: sunriseTime)
+            
+            let sunsetTime = Date.init(timeIntervalSince1970: TimeInterval(dailyWeatherResponse.sunset))
+            dailyWeather.sunset = Sunset(time: sunsetTime)
+            
             dailyWeathers.append(dailyWeather)
         }
         
@@ -89,8 +102,13 @@ extension APIService {
         
         let todayWeather = TodayWeather()
         todayWeather.humidity = todayWeatherResponse.humidity
-        todayWeather.sunset = Date.init(timeIntervalSince1970: TimeInterval(todayWeatherResponse.sunset))
-        todayWeather.sunrise = Date.init(timeIntervalSince1970: TimeInterval(todayWeatherResponse.sunrise))
+        
+        let sunsetTime = Date.init(timeIntervalSince1970: TimeInterval(todayWeatherResponse.sunset))
+        todayWeather.sunset = Sunset(time: sunsetTime)
+        
+        let sunriseTime = Date.init(timeIntervalSince1970: TimeInterval(todayWeatherResponse.sunrise))
+        todayWeather.sunrise = Sunrise(time: sunriseTime)
+        
         todayWeather.changeRain = todayWeatherResponse.clouds
         
         return todayWeather

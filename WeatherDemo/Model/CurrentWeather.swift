@@ -8,8 +8,12 @@
 import Foundation
 import UIKit
 
-class CurrentWeather: NSObject {
+class CurrentWeather: NSObject, Timeline {
     var time: Date!
     var temp: CGFloat!
     var isDayTime: Bool!
+    
+    func getTime() -> Date {
+        return time
+    }
 }
